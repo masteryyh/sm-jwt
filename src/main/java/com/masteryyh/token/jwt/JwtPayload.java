@@ -3,6 +3,7 @@ package com.masteryyh.token.jwt;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * JWT Payload
@@ -55,5 +56,18 @@ public class JwtPayload {
 
     public Map<String, String> getData() {
         return data;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        JwtPayload payload = (JwtPayload) o;
+        return Objects.equals(data, payload.data);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(data);
     }
 }

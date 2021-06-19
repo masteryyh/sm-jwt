@@ -3,7 +3,6 @@ package com.masteryyh.token.helpers;
 import org.bouncycastle.crypto.digests.SM3Digest;
 import org.bouncycastle.crypto.macs.HMac;
 import org.bouncycastle.crypto.params.KeyParameter;
-import org.bouncycastle.util.encoders.UrlBase64;
 
 import java.nio.charset.StandardCharsets;
 
@@ -29,7 +28,7 @@ public class SM3HmacHelper {
         byte[] result = new byte[hmac.getMacSize()];
         hmac.doFinal(result, 0);
 
-        return new String(UrlBase64.encode(result));
+        return Base64Helper.encode(result);
     }
 
     /**

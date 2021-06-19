@@ -2,10 +2,8 @@ package com.masteryyh.token.jwt;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.masteryyh.token.helpers.Base64Helper;
 import com.masteryyh.token.helpers.SM3HmacHelper;
-import org.bouncycastle.util.encoders.UrlBase64;
-
-import java.nio.charset.StandardCharsets;
 import java.util.StringJoiner;
 
 /**
@@ -63,7 +61,7 @@ public class Jwt {
         ObjectMapper mapper = new ObjectMapper();
 
         String header = mapper.writeValueAsString(this.header);
-        String payload = mapper.writeValueAsString(this.payload);
+        String payload = mapper.writeValueAsString(this.payload.getData());
 
         this.signature = SM3HmacHelper.getMac(key, header + "." + payload);
     }
@@ -91,8 +89,8 @@ public class Jwt {
 
         this.signature = SM3HmacHelper.getMac(key, header + "." + payload);
 
-        String headerPart = new String(UrlBase64.encode(header.getBytes(StandardCharsets.UTF_8)));
-        String payloadPart = new String(UrlBase64.encode(payload.getBytes(StandardCharsets.UTF_8)));
+        String headerPart = Base64Helper.encode(header);
+        String payloadPart = Base64Helper.encode(payload);
         return headerPart + "." + payloadPart + "." + this.signature;
     }
 }

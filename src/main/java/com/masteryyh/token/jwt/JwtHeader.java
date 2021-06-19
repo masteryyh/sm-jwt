@@ -1,5 +1,7 @@
 package com.masteryyh.token.jwt;
 
+import java.util.Objects;
+
 /**
  * JWT Header
  */
@@ -31,5 +33,18 @@ public class JwtHeader {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        JwtHeader header = (JwtHeader) o;
+        return Objects.equals(alg, header.alg) && Objects.equals(type, header.type);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(alg, type);
     }
 }
